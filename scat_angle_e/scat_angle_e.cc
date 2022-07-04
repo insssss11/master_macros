@@ -13,6 +13,7 @@ double getbeta(double Tcm, double m1, double m2)
 
 TGraph *draw_scat_angle_e(double Tcm = 0.9)
 {
+
 	gStyle->SetLineWidth(2);
 	constexpr int np = 100;
 	constexpr double amu = 931.5016;
@@ -88,6 +89,9 @@ TGraph *draw_scat_angle_b(double Tb = 3.6)
 
 int scat_angle_e()
 {
+	gStyle->SetTitleFont(132, "XYZ");
+    gStyle->SetTitleFont(132, "T");
+    gStyle->SetTextFont(132);
 	gStyle->SetLineWidth(2);
 	// mg->GetHistogram()->GetXaxis()->SetRangeUser(0., 2.);
 	// mg->Add(gr1);
@@ -109,7 +113,7 @@ int scat_angle_e()
 	}
 	TLatex *tl = new TLatex();
 	c1->SetLeftMargin(0.12);
-	mg->SetTitle(";Lab scattering angle of ^{16}O recoil [deg];E_{lab} spread [%]");
+	mg->SetTitle(";Lab scattering angle of ^{16}O recoil [deg];#it{E}_{lab} spread [%]");
 	mg->GetXaxis()->SetLimits(0, 1.6);
 	// mg->GetYaxis()->SetTitleOffset(1.5);
 	// mg->GetHistogram()->GetXaxis()->SetRangeUser(0., 2.);
@@ -125,12 +129,26 @@ int scat_angle_e()
 	tl->DrawLatex(0.2, 0.5, "#it{E}(^{12}C)=6.0 MeV");
 	tl->DrawLatex(0.2, 0.0, "#it{E}(^{12}C)=4.8 MeV");
 	tl->SetTextSize(22);
-	tl->DrawLatex(0.8, 2.0, "7.2 MeV");
-	tl->DrawLatex(0.8, 1.5, "5.4 MeV");
-	tl->DrawLatex(0.8, 1.0, "4.5 MeV");
-	tl->DrawLatex(0.8, 0.5, "3.6 MeV");
-	tl->DrawLatex(0.8, 0.0, "1.8 MeV");
 	// gr2->Draw();
+
+	TLine *t = new TLine();
+	t->SetLineStyle(2);
+	t->SetLineWidth(2);
+
+	t->DrawLine(1.091, -3.85, 1.091, 0.);
+	tl->DrawLatex(0.92, -4.02, "7.2 MeV");
+	
+	t->DrawLine(1.127, -3.6, 1.127, 0.);
+	tl->DrawLatex(1.15, -3.74, "5.4 MeV");
+	
+	t->DrawLine(1.178, -3.2, 1.178, 0.);
+	tl->DrawLatex(1.20, -3.26, "4.5 MeV");
+	
+	t->DrawLine(1.238, -2.7, 1.238, 0.);
+	tl->DrawLatex(1.25, -2.78, "3.6 MeV");
+	
+	t->DrawLine(1.332, -2.2, 1.332, 0.);
+	tl->DrawLatex(1.34, -2.29, "1.8 MeV");
 
 	return 0;
 }

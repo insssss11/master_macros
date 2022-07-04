@@ -34,6 +34,11 @@ double gamow(double *x, double *p)
 
 int draw_gamow_peak()
 {
+    gStyle->SetTitleFont(132, "XYZ");
+    gStyle->SetTitleFont(132, "T");
+	gStyle->SetTitleFontSize(0.09);
+    gStyle->SetTextFont(132);
+
 	auto f1 = new TF1("Maxwell-Boltzmann", maxwell, 1., 1000., 1);
 	auto f2 = new TF1("QM tunneling", tunnel, 1., 1000., 0);
 	auto f3 = new TF1("Gamov Peak", gamow, 1., 1000., 1);
@@ -42,15 +47,15 @@ int draw_gamow_peak()
 	f3->SetParameter(0, 2e8);
 
 	f1->GetYaxis()->SetRangeUser(1e-28, 10);
-	f1->SetTitle("Gamov peak at #it{T}=2#times10^{8} K;#it{E}_{C.M} [keV];relative probability");
+	f1->SetTitle("Gamov peak at #it{T}=2#times10^{8} K;#it{E}_{cm} [keV];relative probability");
 	f1->GetXaxis()->SetTitleSize(0.055);
 	f1->GetXaxis()->SetTitleOffset(0.8);
 	f1->GetYaxis()->SetTitleSize(0.055);
 	f1->GetYaxis()->SetTitleOffset(1.00);
 
-
 	f1->SetLineStyle(9);
 	f2->SetLineStyle(9);
+
 
 	f1->SetLineColor(9);
 	f2->SetLineColor(6);
@@ -68,5 +73,19 @@ int draw_gamow_peak()
 
 	f2->Draw("SAME");
 	f3->Draw("SAME");
+	TLatex *lt = new TLatex();
+	lt->SetTextAlign(22);
+	lt->SetTextSize(0.040);
+
+	lt->SetTextColor(9);
+	lt->DrawLatexNDC(0.40, 0.85, "Maxwell-boltman");
+	lt->DrawLatexNDC(0.40, 0.81, "#proptoexp(-#it{E}/#it{kT})");
+	
+	lt->SetTextColor(6);
+	lt->DrawLatexNDC(0.60, 0.71, "Coulomb barrier");
+	lt->DrawLatexNDC(0.60, 0.66, "#proptoexp(-#sqrt{#it{E}_{G}/#it{E}})");
+
+	lt->SetTextColor(2);
+	lt->DrawLatexNDC(0.50, 0.35, "Gamov peak");
 	return 1;
 }
